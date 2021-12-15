@@ -1,9 +1,15 @@
 import Fastify from 'fastify';
+import { readFileSync } from 'fs';
 
 import { getActiveUsers, setActiveUser, setInactiveUser, getState, getCurrentInfo, setCurrentInfo } from './state.js';
 
 const fastify = Fastify({
     // logger: true
+    http2: true,
+    https: {
+            key: readFileSync("/etc/letsencrypt/live/api.fs.londschien.com/privkey.pem"),
+            cert: readFileSync("/etc/letsencrypt/live/api.fs.londschien.com/cert.pem"),
+    }
 });
 
 fastify.register(import('fastify-cors'), {
