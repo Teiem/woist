@@ -43,7 +43,7 @@ const init = async () => {
                 ${
                     formatter.format(
                         Object.entries(groupedUsers)
-                        .map(([ stg, names ]) => Studiengänge[stg] + (names.length ? `(${ formatter.format(names) })` : "")))
+                        .map(([ stg, names ]) => Studiengänge[stg] + (names.length ? ` (${ formatter.format(names) })` : "")))
                 }
                 </span>
                 <span>da.</span>
