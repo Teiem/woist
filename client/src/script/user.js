@@ -31,34 +31,30 @@ const init = async () => {
     }
 
     root.innerHTML += users.length
-        ? `<h2>Wir haben offen</h2>`
-        : `<h2>Wir haben geschlossen</h2>`
+        ? `<h2>Wir haben offen :)</h2>`
+        : `<h2>Wir haben geschlossen :(</h2>`
 
     if (users.length) {
         const formatter = new Intl.ListFormat('de', { style: 'long', type: 'conjunction' })
-        root.innerHTML += ``
-
         root.innerHTML += `
             <p>
-                <span>aktuell ${users.length === 1 ? "ist ein Studierender des Studienganges" : "sind Studierende der Studiengänge:"}</span>
+                <span>Aktuell ${users.length === 1 ? "ist ein Studierender des Studienganges" : "sind Studierende der Studiengänge"}</span>
                 <span>
                 ${
                     formatter.format(
                         Object.entries(groupedUsers)
-                        .map(([ stg, names ]) => `
-                            <span>
-                                <span>${ Studiengänge[stg] }</span>
-                                ${ names.length ? `<span>(${ formatter.format(names) })</span>` : ""}
-                            </span>
-                        `))
+                        .map(([ stg, names ]) => Studiengänge[stg] + (names.length ? `(${ formatter.format(names) })` : "")))
                 }
                 </span>
-                <span>da</span>
+                <span>da.</span>
             </p>
         `;
-
-        root.innerHTML += ""
     }
+
+    root.innerHTML += `
+        <p>
+            ${ currentInfo }
+        </p>`
 };
 
 init();

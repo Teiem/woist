@@ -1,29 +1,41 @@
-body {
-    padding: 1em 1em;
-    color: #444;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
-}
-
-h1,
-h2,
-h3 {
-    line-height: 1.2
-}
-
-body {
-    font-size: 1.5em;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
 body {
   font-family: 'Short Stack', cursive;
 }
 
-button, input {
+body {
+    color: #444;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+
+    font-size: 1.5em;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    text-align: center;
+}
+
+button, input, label {
     cursor: pointer;
 }
+
+button {
+    width: 100%;
+}
+
+.users {
+    text-align: left;
+    width: max-content;
+}
+

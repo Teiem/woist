@@ -1,4 +1,4 @@
-const Studiengänge = Object.freeze({
+const Studiengang = Object.freeze({
     "BMI": 0,
     "BMT": 1,
     "BTB": 2,
@@ -9,27 +9,27 @@ const Studiengänge = Object.freeze({
 export const users = [
     {
         name: "Tim",
-        stg: Studiengänge.BMI,
+        stg: Studiengang.BMI,
         showName: true,
     },
     {
         name: "Sebas",
-        stg: Studiengänge.BMI,
+        stg: Studiengang.BMI,
         showName: true,
     },
     {
         name: "Yeray",
-        stg: Studiengänge.BMT,
+        stg: Studiengang.BMT,
         showName: true,
     },
     {
         name: "Horst",
-        stg: Studiengänge.DAYSI,
+        stg: Studiengang.DAYSI,
         showName: false,
     },
     {
         name: "Peter",
-        stg: Studiengänge.MMI,
+        stg: Studiengang.MMI,
         showName: true,
     }
 ]
