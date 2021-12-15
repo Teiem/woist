@@ -11,16 +11,22 @@ const root = document.body;
 
 const init = async () => {
     console.log("connecting to api...");
-    const req = await fetch(serverURL + "/api", {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-            type: "getActive",
-        })
-    })
+    let req;
+
+    try {
+        req = await fetch(serverURL + "/api", {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                type: "getActive",
+            })
+        });
+    } catch (err) {
+        returnroot.innerHTML = "<h1>Unser Server hat scheinbar aktuell Probleme</h1>";
+    }
 
     const { users, currentInfo } = await req.json()
     const groupedUsers = {}
@@ -30,7 +36,7 @@ const init = async () => {
         if (user.name) groupedUsers[user.stg].push(user.name)
     }
 
-    root.innerHTML += users.length
+    root.innerHTML = users.length
         ? `<h2>Wir haben offen :)</h2>`
         : `<h2>Wir haben geschlossen :(</h2>`
 
@@ -51,10 +57,8 @@ const init = async () => {
         `;
     }
 
-    root.innerHTML += `
-        <p>
-            ${ currentInfo }
-        </p>`
-};
+    root.innerHTML += `<div id="infoContainer"></div>`;
+    document.getElementById("infoContainer").textContent = currentInfo;
+}
 
 init();
