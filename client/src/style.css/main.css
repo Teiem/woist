@@ -4,6 +4,7 @@ body {
 }
 
 body {
+    padding: 0 1em;
     color: #444;
 
     display: flex;
