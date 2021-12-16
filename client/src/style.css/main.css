@@ -40,3 +40,10 @@ button {
     width: max-content;
 }
 
+textarea {
+    outline: none;
+}
+
+textarea#message:focus {
+    background-color: #fffb
+}
