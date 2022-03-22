@@ -12,7 +12,23 @@ export const getActiveUsers = () => userState
         : { stg }
     );
 
-const getUserById = userID => userState.find(({ id }) => userID === id);
+const getUserById = userID => {
+    const user = userState.find(({ id }) => userID === id);
+
+    if (user) return user;
+
+    console.warn(`no user with id ${ id } found, using unknownUser`);
+    return userState[0];
+}
+
+const getUserByNFC = nfc => {
+    const user = userState.find(user => user.nfc === nfc);
+
+    if (user) return user;
+
+    console.warn(`no user with nfc ${ nfc } found, using unknownUser`);
+    return userState[0];
+}
 
 export const setActiveUser = userID => {
     const user = getUserById(userID);
@@ -21,6 +37,16 @@ export const setActiveUser = userID => {
 
 export const setInactiveUser = userID => {
     const user = getUserById(userID);
+    user.active = false;
+}
+
+export const setActiveNFC = nfc => {
+    const user = getUserByNFC(nfc);
+    user.active = true;
+}
+
+export const setInactiveNFC = nfc => {
+    const user = getUserByNFC(nfc);
     user.active = false;
 }
 

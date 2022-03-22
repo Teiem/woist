@@ -4,6 +4,7 @@ const Studiengänge = Object.freeze([
     "BTB",
     "MMI",
     "DAYSI",
+    "UNKNOWN"
 ])
 
 const serverURL = 'https://api.fs.londschien.com:3000';

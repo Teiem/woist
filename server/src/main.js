@@ -1,20 +1,21 @@
 import Fastify from 'fastify';
 import { readFileSync } from 'fs';
 
-import { getActiveUsers, setActiveUser, setInactiveUser, getState, getCurrentInfo, setCurrentInfo } from './state.js';
+import { getActiveUsers, setActiveUser, setInactiveUser, getState, getCurrentInfo, setCurrentInfo, setActiveNFC } from './state.js';
 
 const fastify = Fastify({
-    // logger: true
+    // logger: true,
     http2: true,
     https: {
             key: readFileSync("/etc/letsencrypt/live/api.fs.londschien.com/privkey.pem"),
             cert: readFileSync("/etc/letsencrypt/live/api.fs.londschien.com/cert.pem"),
+            allowHTTP1: true,
     }
 });
 
 fastify.register(import('fastify-cors'), {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST",
+    "Access-Control-Allow-Methods": ['GET', 'PUT', 'POST'],
 })
 
 // fastify.addHook('preHandler', (req, reply, done) => {
@@ -25,32 +26,68 @@ fastify.register(import('fastify-cors'), {
 
 fastify.post('/api', async ({ body: { type, data } }, reply) => {
 
-    console.log({ type, data });
+    console.log("received message:", { type, data });
 
     switch (type) {
+
         case "getActive": {
             return {
                 users: getActiveUsers(),
                 currentInfo: getCurrentInfo(),
             };
         }
+
         case "setActive": {
+            if (!data) {
+                reply.code = 400;
+                console.warn(`request of type "${ type }" without data`)
+                return;
+            }
+
             setActiveUser(data);
             return;
         }
+
         case "setInactive": {
+            if (!data) {
+                reply.code = 400;
+                console.warn(`request of type "${ type }" without data`)
+                return;
+            }
+
             setInactiveUser(data);
             return;
         }
+
         case "getState": {
             return {
                 users: getState(),
                 currentInfo: getCurrentInfo(),
             };
         }
+
         case "setInfo": {
-            return setCurrentInfo(data);
+            if (!data) {
+                reply.code = 400;
+                console.warn(`request of type "${ type }" without data`)
+                return;
+            }
+
+            setCurrentInfo(data);
+            return;
         }
+
+        case "nfcRead": {
+            if (!data) {
+                reply.code = 400;
+                console.warn(`request of type "${ type }" without data`)
+                return;
+            }
+
+            setActiveNFC(data);
+            return;
+        }
+
     }
 });
 
